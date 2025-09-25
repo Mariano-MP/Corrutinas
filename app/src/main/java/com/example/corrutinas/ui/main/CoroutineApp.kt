@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.example.corrutinas.ui.theme.CorrutinasTheme
 import com.example.corrutinas.viewmodel.MainViewModel
 
+val N = 2
 
 @Composable
 fun CoroutineApp(mainViewModel: MainViewModel, modifier : Modifier = Modifier){
@@ -44,7 +45,7 @@ fun CoroutineApp(mainViewModel: MainViewModel, modifier : Modifier = Modifier){
             Text(text = "Cambio de color")
         }
         Button(onClick = {
-            mainViewModel.iniciarContadorSecuencial()
+            mainViewModel.iniciarContadorSecuencial(N)
         } ,
             enabled = !mainViewModel.oneCount,
             colors = ButtonDefaults.buttonColors(Color.Red)
@@ -58,7 +59,7 @@ fun CoroutineApp(mainViewModel: MainViewModel, modifier : Modifier = Modifier){
         Spacer(modifier = modifier.height(30.dp))
         Button(onClick = {
             if(mainViewModel.oneCount == false){
-                mainViewModel.contadorDoble()
+                mainViewModel.iniciarContadorConcurrente(N)
             }
         }) {
             Text(text = "Empezar Contadores")

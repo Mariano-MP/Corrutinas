@@ -18,45 +18,45 @@ class MainViewModel : ViewModel() {
 
     private var contadorJob: Job? = null
 
-    // Algoritmo prolongado secuencial (bloquea la UI)
-    private fun contadorBloqueante(tiempo: Int) {
-        for (i in 1..tiempo) {
-            Thread.sleep(1000) // Congela el hilo principal
-            countTime = i
+    // 🔹 Algoritmo prolongado secuencial (bloquea la UI)
+    private fun contadorBloqueante(tiempo: Int, repeticiones: Int) {
+        for (r in 1..repeticiones) {
+            for (i in 1..tiempo) {
+                Thread.sleep(1000) // Congela el hilo principal
+                countTime = i
+            }
         }
     }
 
-    fun iniciarContadorSecuencial() {
-        resultState = "Ejecutando bloqueante..."
+    fun iniciarContadorSecuencial(n: Int) {
+        resultState = "Ejecutando bloqueante con $n repeticiones..."
         countTime = 0
-        contadorBloqueante(5)
-        contadorBloqueante(5)
-        resultState = "Fin de contadores (bloqueante)"
+        contadorBloqueante(5, n) // cada contador dura 5s
+        resultState = "Fin bloqueante con $n repeticiones"
     }
 
-
-
-    private suspend fun contadorSimple(tiempo: Int) {
-        for (i in 1..tiempo) {
-            delay(1000)
-            countTime = i
+    // 🔹 Algoritmo prolongado concurrente (no bloquea la UI)
+    private suspend fun contadorConcurrente(tiempo: Int, repeticiones: Int) {
+        for(r in 1..repeticiones) {
+            for (i in 1..tiempo) {
+                delay(1000) // NO bloquea la UI
+                countTime = i
+            }
         }
     }
-    fun contadorDoble() {
-        resultState = "Ejecutando concurrente..."
+
+    fun iniciarContadorConcurrente(n: Int) {
+        resultState = "Ejecutando concurrente con $n repeticiones..."
         oneCount = true
         countTime = 0
         contadorJob = viewModelScope.launch {
-            contadorSimple(5)
-            countTime = 0
-            contadorSimple(5)
-            resultState = "Fin de contadores (concurrente)"
+            contadorConcurrente(5, n)
+            resultState = "Fin concurrente con $n repeticiones"
             oneCount = false
         }
     }
 
-
-
+    // 🔹 Cancelación
     fun cancelarContador() {
         viewModelScope.coroutineContext.cancelChildren()
         countTime = 0
