@@ -43,6 +43,15 @@ fun CoroutineApp(mainViewModel: MainViewModel, modifier : Modifier = Modifier){
         ){
             Text(text = "Cambio de color")
         }
+        Button(onClick = {
+            mainViewModel.iniciarContadorSecuencial()
+        } ,
+            enabled = !mainViewModel.oneCount,
+            colors = ButtonDefaults.buttonColors(Color.Red)
+        ) {
+            Text(text = "Contadores Secuenciales")
+        }
+
         Spacer(modifier = modifier.height(30.dp))
         Text (text = "${mainViewModel.countTime} [s]")
         Text(text = mainViewModel.resultState)
