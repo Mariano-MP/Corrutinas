@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.example.corrutinas.ui.theme.CorrutinasTheme
 import com.example.corrutinas.viewmodel.MainViewModel
 
-val N = 2
+val N = 3
 
 @Composable
 fun CoroutineApp(mainViewModel: MainViewModel, modifier : Modifier = Modifier){
@@ -76,11 +76,3 @@ fun CoroutineApp(mainViewModel: MainViewModel, modifier : Modifier = Modifier){
     }
 }
 
-/*
-@Preview
-@Composable
-fun CoroutineAppPreview( ){
-    CorrutinasTheme{
-        CoroutineApp()
-    }
-}*/

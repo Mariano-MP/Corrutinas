@@ -18,7 +18,6 @@ class MainViewModel : ViewModel() {
 
     private var contadorJob: Job? = null
 
-    // 🔹 Algoritmo prolongado secuencial (bloquea la UI)
     private fun contadorBloqueante(tiempo: Int, repeticiones: Int) {
         for (r in 1..repeticiones) {
             for (i in 1..tiempo) {
@@ -31,15 +30,15 @@ class MainViewModel : ViewModel() {
     fun iniciarContadorSecuencial(n: Int) {
         resultState = "Ejecutando bloqueante con $n repeticiones..."
         countTime = 0
-        contadorBloqueante(5, n) // cada contador dura 5s
+        contadorBloqueante(5, n)
         resultState = "Fin bloqueante con $n repeticiones"
     }
 
-    // 🔹 Algoritmo prolongado concurrente (no bloquea la UI)
+
     private suspend fun contadorConcurrente(tiempo: Int, repeticiones: Int) {
         for(r in 1..repeticiones) {
             for (i in 1..tiempo) {
-                delay(1000) // NO bloquea la UI
+                delay(1000)
                 countTime = i
             }
         }
@@ -56,7 +55,6 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    // 🔹 Cancelación
     fun cancelarContador() {
         viewModelScope.coroutineContext.cancelChildren()
         countTime = 0
